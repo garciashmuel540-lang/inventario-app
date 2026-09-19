@@ -157,6 +157,7 @@ export default defineConfig(({ command, isPreview }) => ({
     strictPort: true,
   },
   resolve: { tsconfigPaths: true },
+  ssr: { noExternal: ["tslib"], external: ["@radix-ui/react-alert-dialog", "@radix-ui/react-dialog"] },
   plugins: [
     pgliteBootstrapPlugin(),
     // Before tanstackStart so /auth/popup never falls through to the SPA.
@@ -169,13 +170,7 @@ export default defineConfig(({ command, isPreview }) => ({
     tanstackStart(),
     ...(command === "build" || isPreview
       ? [
-          nitro({
-            preset: "vercel",
-            // Auto-registers server/middleware/* (the PWA install page +
-            // manifest + head-tag middleware). Nitro v3 defaults serverDir to
-            // false, so removing this silently unwires /?install=1 on deploys.
-            serverDir: "./server",
-          }),
+          nitro(),
         ]
       : []),
     viteReact(),
