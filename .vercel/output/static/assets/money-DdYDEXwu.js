@@ -1,0 +1,1 @@
+import{L as e,f as t,i as n,j as r}from"./button-CY79z17x.js";var i=e();function a({value:e,signed:a,className:o}){let s=n(e=>e.settings.currency);return(0,i.jsx)(`span`,{className:r(`tabular-nums`,a&&e>0?`text-success`:a&&e<0?`text-destructive`:void 0,o),children:t(e,s)})}export{a as t};

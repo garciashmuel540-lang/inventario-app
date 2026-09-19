@@ -1,0 +1,160 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme {
+  --font-sans: "Source Sans 3", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-muted: var(--sidebar-muted);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 28px;
+
+  --shadow-card: 0 1px 2px rgb(23 32 51 / 0.04), 0 8px 24px rgb(31 56 100 / 0.06);
+}
+
+:root {
+  --background: #f2f4f7;
+  --foreground: #172033;
+  --card: #ffffff;
+  --card-foreground: #172033;
+  --popover: #ffffff;
+  --popover-foreground: #172033;
+  --primary: #1f3864;
+  --primary-foreground: #f7f9fc;
+  --secondary: #e6eaf0;
+  --secondary-foreground: #1f3864;
+  --muted: #eef1f5;
+  --muted-foreground: #5c6778;
+  --accent: #e8eef6;
+  --accent-foreground: #1f3864;
+  --destructive: #c0392b;
+  --destructive-foreground: #ffffff;
+  --border: #d5dce6;
+  --input: #cfd7e3;
+  --ring: #1f3864;
+  --success: #1f7a4d;
+  --success-foreground: #ffffff;
+  --warning: #9a6b12;
+  --warning-foreground: #ffffff;
+  --sidebar: #1f3864;
+  --sidebar-foreground: #e8eef6;
+  --sidebar-muted: #9bb0cc;
+  --sidebar-accent: #2a4a7a;
+  --sidebar-border: #2c4a75;
+  --chart-1: #1f3864;
+  --chart-2: #2a9b7a;
+  --chart-3: #5c7a9e;
+  --chart-4: #c0392b;
+}
+
+.dark {
+  --background: #0f1621;
+  --foreground: #e8eef6;
+  --card: #172033;
+  --card-foreground: #e8eef6;
+  --popover: #1b2738;
+  --popover-foreground: #e8eef6;
+  --primary: #7ba3d4;
+  --primary-foreground: #0f1621;
+  --secondary: #243044;
+  --secondary-foreground: #d5deea;
+  --muted: #1e2a3b;
+  --muted-foreground: #93a0b3;
+  --accent: #24344a;
+  --accent-foreground: #dce6f2;
+  --destructive: #e06b60;
+  --destructive-foreground: #1a1010;
+  --border: #2c3b50;
+  --input: #33465f;
+  --ring: #7ba3d4;
+  --success: #3dba7a;
+  --success-foreground: #062013;
+  --warning: #e0b25c;
+  --warning-foreground: #2a1d08;
+  --sidebar: #0b1220;
+  --sidebar-foreground: #e8eef6;
+  --sidebar-muted: #8fa3c4;
+  --sidebar-accent: #1a2b44;
+  --sidebar-border: #24344c;
+  --chart-1: #7ba3d4;
+  --chart-2: #3dba7a;
+  --chart-3: #8fa3c4;
+  --chart-4: #e06b60;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+    letter-spacing: -0.03em;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
