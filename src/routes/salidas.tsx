@@ -3,6 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { FileDown, Pencil, Plus, Printer, Search, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { ConfirmDialog } from "@/components/confirm-dialog";
+import { ScannerDialog } from "@/components/scanner-dialog";
 import { EmptyState } from "@/components/empty-state";
 import { Field } from "@/components/field";
 import { Money } from "@/components/money";
@@ -52,6 +53,7 @@ function SalesPage() {
   const [editing, setEditing] = useState<Sale | null>(null);
   const [draft, setDraft] = useState<SaleDraft>(blankDraft(sales, activeProducts[0]?.id ?? ""));
   const [pendingDelete, setPendingDelete] = useState<Sale | null>(null);
+  const [scannerOpen, setScannerOpen] = useState(false);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -90,6 +92,20 @@ function SalesPage() {
       productId: id,
       unitPrice: product?.salePrice ?? prev.unitPrice,
     }));
+  }
+
+  function handleScan(code: string) {
+    const product = products.find((p) => p.code.toLowerCase() === code.toLowerCase());
+    if (!product) {
+      toast.error("Producto no encontrado: " + code);
+      return;
+    }
+    if (product.status !== "activo") {
+      toast.error("Producto inactivo: " + product.name);
+      return;
+    }
+    onProductChange(product.id);
+    toast.success("Producto: " + product.name);
   }
 
   function openEdit(sale: Sale) {
@@ -274,18 +290,28 @@ function SalesPage() {
               />
             </Field>
             <Field label="Producto" className="sm:col-span-2">
-              <Select value={draft.productId} onValueChange={onProductChange}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Seleccione un producto" />
-                </SelectTrigger>
-                <SelectContent>
-                  {activeProducts.map((p) => (
-                    <SelectItem key={p.id} value={p.id}>
-                      {p.code} · {p.name} (stock {stockOf(p.id, entries, sales)})
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <div className="flex gap-2">
+                <Select value={draft.productId} onValueChange={onProductChange}>
+                  <SelectTrigger className="flex-1">
+                    <SelectValue placeholder="Seleccione un producto" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {activeProducts.map((p) => (
+                      <SelectItem key={p.id} value={p.id}>
+                        {p.code} · {p.name} (stock {stockOf(p.id, entries, sales)})
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setScannerOpen(true)}
+                  title="Escanear código con la cámara"
+                >
+                  📷
+                </Button>
+              </div>
             </Field>
             <Field label="Cantidad" htmlFor="qty">
               <Input
@@ -350,6 +376,12 @@ function SalesPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <ScannerDialog
+        open={scannerOpen}
+        onClose={() => setScannerOpen(false)}
+        onScan={handleScan}
+      />
 
       <ConfirmDialog
         open={Boolean(pendingDelete)}
