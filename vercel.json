@@ -1,7 +1,1 @@
-{
-  "functions": {
-    "__server.func/*.mjs": {
-      "includeFiles": "node_modules/tslib/**"
-    }
-  }
-}
+{}
